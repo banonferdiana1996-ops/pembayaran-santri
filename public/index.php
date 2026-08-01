@@ -1,19 +1,20 @@
 <?php
 
-declare(strict_types=1);
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 
-require_once __DIR__ . '/../config/database.php';
+define('LARAVEL_START', microtime(true));
 
-$db = getDbConnection();
+// Determine if the application is in maintenance mode...
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
 
-$status = 'ok';
-$dbName = (string) $db->query('SELECT DATABASE()')->fetchColumn();
+// Register the Composer autoloader...
+require __DIR__.'/../vendor/autoload.php';
 
-header('Content-Type: application/json');
-echo json_encode([
-    'app' => 'Pembayaran Santri',
-    'php_version' => PHP_VERSION,
-    'db_status' => $status,
-    'db_name' => $dbName,
-    'time' => date('c'),
-], JSON_PRETTY_PRINT);
+// Bootstrap Laravel and handle the request...
+/** @var Application $app */
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$app->handleRequest(Request::capture());

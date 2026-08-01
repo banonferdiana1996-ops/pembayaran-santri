@@ -1,0 +1,246 @@
+:root {
+    --primary-grad: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
+    --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --accent: #06b6d4;
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --radius: 1rem;
+    --shadow-soft: 0 10px 30px rgba(30, 58, 138, 0.12);
+    --shadow-hover: 0 16px 40px rgba(30, 58, 138, 0.2);
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f4f7fd;
+}
+
+/* ===== Glassmorphism ===== */
+.glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+}
+
+.glass-dark {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius);
+}
+
+/* ===== Background blue gradient + soft dot pattern ===== */
+.bg-auth,
+.bg-landing {
+    background:
+        radial-gradient(rgba(255, 255, 255, 0.08) 1.2px, transparent 1.2px),
+        radial-gradient(rgba(255, 255, 255, 0.06) 1.2px, transparent 1.2px),
+        var(--primary-grad);
+    background-size: 42px 42px, 42px 42px, cover;
+    min-height: 100vh;
+}
+
+.bg-dot-soft {
+    background-image: radial-gradient(rgba(37, 99, 235, 0.08) 1.2px, transparent 1.2px);
+    background-size: 26px 26px;
+}
+
+/* ===== Cards ===== */
+.card-soft {
+    border: 0;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-soft:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+}
+
+.card-soft:active {
+    transform: translateY(-1px) scale(0.99);
+}
+
+/* ===== Buttons ===== */
+.btn-primary-grad {
+    background: var(--primary-grad);
+    color: #fff;
+    border: 0;
+    border-radius: 0.75rem;
+    transition: all 0.25s ease;
+}
+
+.btn-primary-grad:hover {
+    color: #fff;
+    filter: brightness(1.08);
+    box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-primary-grad:active {
+    transform: scale(0.97);
+}
+
+/* ===== AdminLTE customization ===== */
+.main-header .navbar {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 16px rgba(30, 58, 138, 0.08);
+}
+
+.main-sidebar {
+    background: linear-gradient(180deg, #1e3a8a 0%, #1d4ed8 100%);
+}
+
+.main-sidebar .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    border-radius: 0.65rem;
+    margin: 2px 8px;
+    transition: all 0.2s ease;
+}
+
+.main-sidebar .nav-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.main-sidebar .nav-link.active {
+    color: #1e3a8a;
+    background: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.main-sidebar .nav-header {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.brand-link {
+    background: rgba(255, 255, 255, 0.06) !important;
+    backdrop-filter: blur(6px);
+}
+
+/* ===== Tables ===== */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    border-radius: 0.6rem;
+    border: 1px solid #dbe3f0;
+    padding: 0.35rem 0.7rem;
+}
+
+table.dataTable thead th {
+    background: #eef3fc;
+    color: #1e3a8a;
+    border-bottom: 2px solid #dbe3f0;
+}
+
+/* ===== Select2 ===== */
+.select2-container .select2-selection--single {
+    height: 38px;
+    border-radius: 0.6rem;
+    border-color: #dbe3f0;
+    padding-top: 4px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 36px;
+}
+
+/* ===== Status badges ===== */
+.badge-soft-success { background: #d1fae5; color: #065f46; }
+.badge-soft-danger  { background: #fee2e2; color: #991b1b; }
+.badge-soft-warning { background: #fef3c7; color: #92400e; }
+.badge-soft-info    { background: #dbeafe; color: #1e40af; }
+
+/* ===== Skeleton loading ===== */
+.skeleton {
+    position: relative;
+    overflow: hidden;
+    background: #e8eef8;
+    border-radius: 0.5rem;
+}
+
+.skeleton::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
+    animation: skeleton-wave 1.4s infinite;
+}
+
+@keyframes skeleton-wave {
+    100% { transform: translateX(100%); }
+}
+
+/* ===== Landing ===== */
+.landing-hero {
+    color: #fff;
+}
+
+.landing-card {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-soft);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.landing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ===== Payment months grid ===== */
+.month-grid .month-cell {
+    border-radius: 0.7rem;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.8rem;
+    transition: transform 0.2s ease;
+}
+
+.month-grid .month-cell:hover {
+    transform: scale(1.05);
+}
+
+.month-paid { background: #d1fae5; color: #065f46; }
+.month-unpaid { background: #fee2e2; color: #991b1b; }
+
+/* ===== Animations ===== */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.45s ease both;
+}
+
+@keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.35); }
+    70% { box-shadow: 0 0 0 12px rgba(37, 99, 235, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+.pulse-ring { animation: pulse-ring 2s infinite; }
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: #eef2f9; }
+::-webkit-scrollbar-thumb { background: #b7c7e4; border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #93a8d4; }
+
+/* ===== Print ===== */
+@media print {
+    .main-sidebar, .main-header, .no-print { display: none !important; }
+    .content-wrapper { margin-left: 0 !important; padding: 0 !important; }
+    body, .content-wrapper { background: #fff !important; }
+}
