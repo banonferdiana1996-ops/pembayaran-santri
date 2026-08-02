@@ -52,7 +52,10 @@
                     </div>
                     <div class="dropdown-divider"></div>
                     <a href="{{ route('dashboard') }}" class="dropdown-item"><i class="fas fa-gauge me-2"></i>Dashboard</a>
-                    <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a href="{{ route('account.profile') }}" class="dropdown-item"><i class="fas fa-user-gear me-2"></i>Pengaturan User</a>
+                    <a href="{{ route('account.password') }}" class="dropdown-item"><i class="fas fa-key me-2"></i>Ubah Password</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt me-2"></i>Keluar
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

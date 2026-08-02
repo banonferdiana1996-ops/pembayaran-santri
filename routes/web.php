@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BackupController;
@@ -29,6 +30,12 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // ===== Akun pribadi (semua role) =====
+    Route::get('/pengaturan-user', [AccountController::class, 'showProfile'])->name('account.profile');
+    Route::put('/pengaturan-user', [AccountController::class, 'updateProfile'])->name('account.updateProfile');
+    Route::get('/ubah-password', [AccountController::class, 'showPassword'])->name('account.password');
+    Route::put('/ubah-password', [AccountController::class, 'updatePassword'])->name('account.updatePassword');
 
     // ===== Master Data (admin) =====
     Route::middleware('role:admin')->group(function () {
