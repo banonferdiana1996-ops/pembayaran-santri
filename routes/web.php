@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JenisPembayaranController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PlaceholderController;
 use App\Http\Controllers\SantriController;
+use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -45,10 +48,27 @@ Route::middleware('auth')->group(function () {
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
 
+    // ===== Pembayaran (admin & bendahara) =====
+    Route::middleware('role:admin|bendahara')->group(function () {
+        Route::get('/jenis-pembayaran', [JenisPembayaranController::class, 'index'])->name('jenis-pembayaran.index');
+        Route::post('/jenis-pembayaran', [JenisPembayaranController::class, 'store'])->name('jenis-pembayaran.store');
+        Route::put('/jenis-pembayaran/{jenisPembayaran}', [JenisPembayaranController::class, 'update'])->name('jenis-pembayaran.update');
+        Route::delete('/jenis-pembayaran/{jenisPembayaran}', [JenisPembayaranController::class, 'destroy'])->name('jenis-pembayaran.destroy');
+
+        Route::get('/tagihan', [TagihanController::class, 'index'])->name('tagihan.index');
+        Route::post('/tagihan/generate', [TagihanController::class, 'generate'])->name('tagihan.generate');
+        Route::delete('/tagihan/{tagihan}', [TagihanController::class, 'destroy'])->name('tagihan.destroy');
+
+        Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran.index');
+        Route::get('/pembayaran/buat', [PembayaranController::class, 'create'])->name('pembayaran.create');
+        Route::get('/pembayaran/santri/{santri}/tagihan-belum-lunas', [PembayaranController::class, 'tagihanBelumLunas'])->name('pembayaran.tagihan-belum-lunas');
+        Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
+        Route::get('/pembayaran/{pembayaran}/kwitansi', [PembayaranController::class, 'kwitansi'])->name('pembayaran.kwitansi');
+        Route::get('/pembayaran/{pembayaran}/unduh', [PembayaranController::class, 'unduhKwitansi'])->name('pembayaran.unduh');
+        Route::delete('/pembayaran/{pembayaran}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
+    });
+
     // ===== Routing skeleton — modul dibangun bertahap =====
-    Route::get('/jenis-pembayaran', PlaceholderController::class)->name('jenis-pembayaran.index');
-    Route::get('/tagihan', PlaceholderController::class)->name('tagihan.index');
-    Route::get('/pembayaran', PlaceholderController::class)->name('pembayaran.index');
     Route::get('/income', PlaceholderController::class)->name('income.index');
     Route::get('/expense', PlaceholderController::class)->name('expense.index');
     Route::get('/laporan', PlaceholderController::class)->name('report.index');
