@@ -1,6 +1,5 @@
-const CACHE_NAME = 'sip-santri-v1';
+const CACHE_NAME = 'sip-santri-v2';
 const CORE_ASSETS = [
-    '/',
     '/css/app.css',
     '/js/app.js',
     '/manifest.json'
@@ -28,6 +27,22 @@ self.addEventListener('fetch', (event) => {
     if (request.url.includes('/storage/')) {
         return;
     }
+
+    if (request.mode === 'navigate') {
+        event.respondWith(
+            fetch(request)
+                .then((response) => {
+                    if (response && response.status === 200) {
+                        const copy = response.clone();
+                        caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+                    }
+                    return response;
+                })
+                .catch(() => caches.match(request))
+        );
+        return;
+    }
+
     event.respondWith(
         caches.match(request).then((cached) => {
             const network = fetch(request).then((response) => {
