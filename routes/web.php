@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\JenisPembayaranController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembayaranController;
 use App\Http\Controllers\PlaceholderController;
 use App\Http\Controllers\SantriController;
@@ -68,10 +71,24 @@ Route::middleware('auth')->group(function () {
         Route::delete('/pembayaran/{pembayaran}', [PembayaranController::class, 'destroy'])->name('pembayaran.destroy');
     });
 
+    // ===== Kas (income & expense) — admin & bendahara =====
+    Route::middleware('role:admin|bendahara')->group(function () {
+        Route::get('/income', [IncomeController::class, 'index'])->name('income.index');
+        Route::post('/income', [IncomeController::class, 'store'])->name('income.store');
+        Route::put('/income/{income}', [IncomeController::class, 'update'])->name('income.update');
+        Route::delete('/income/{income}', [IncomeController::class, 'destroy'])->name('income.destroy');
+
+        Route::get('/expense', [ExpenseController::class, 'index'])->name('expense.index');
+        Route::post('/expense', [ExpenseController::class, 'store'])->name('expense.store');
+        Route::put('/expense/{expense}', [ExpenseController::class, 'update'])->name('expense.update');
+        Route::delete('/expense/{expense}', [ExpenseController::class, 'destroy'])->name('expense.destroy');
+
+        Route::get('/laporan', [LaporanController::class, 'index'])->name('report.index');
+        Route::get('/laporan/unduh-pdf', [LaporanController::class, 'unduhPdf'])->name('report.pdf');
+        Route::get('/laporan/unduh-excel', [LaporanController::class, 'unduhExcel'])->name('report.excel');
+    });
+
     // ===== Routing skeleton — modul dibangun bertahap =====
-    Route::get('/income', PlaceholderController::class)->name('income.index');
-    Route::get('/expense', PlaceholderController::class)->name('expense.index');
-    Route::get('/laporan', PlaceholderController::class)->name('report.index');
     Route::get('/pengumuman', PlaceholderController::class)->name('announcement.index');
     Route::get('/pengaturan', PlaceholderController::class)->name('setting.index');
     Route::get('/backup', PlaceholderController::class)->name('backup.index');
