@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\IncomeController;
@@ -8,8 +10,8 @@ use App\Http\Controllers\JenisPembayaranController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PembayaranController;
-use App\Http\Controllers\PlaceholderController;
 use App\Http\Controllers\SantriController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TagihanController;
 use App\Http\Controllers\TahunAjaranController;
 use App\Http\Controllers\UserController;
@@ -88,8 +90,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporan/unduh-excel', [LaporanController::class, 'unduhExcel'])->name('report.excel');
     });
 
-    // ===== Routing skeleton — modul dibangun bertahap =====
-    Route::get('/pengumuman', PlaceholderController::class)->name('announcement.index');
-    Route::get('/pengaturan', PlaceholderController::class)->name('setting.index');
-    Route::get('/backup', PlaceholderController::class)->name('backup.index');
+    // ===== Pengaturan — admin =====
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/pengumuman', [AnnouncementController::class, 'index'])->name('announcement.index');
+        Route::post('/pengumuman', [AnnouncementController::class, 'store'])->name('announcement.store');
+        Route::put('/pengumuman/{announcement}', [AnnouncementController::class, 'update'])->name('announcement.update');
+        Route::delete('/pengumuman/{announcement}', [AnnouncementController::class, 'destroy'])->name('announcement.destroy');
+
+        Route::get('/pengaturan', [SettingController::class, 'index'])->name('setting.index');
+        Route::put('/pengaturan', [SettingController::class, 'update'])->name('setting.update');
+
+        Route::get('/backup', [BackupController::class, 'index'])->name('backup.index');
+        Route::post('/backup', [BackupController::class, 'store'])->name('backup.store');
+        Route::get('/backup/{backup}/unduh', [BackupController::class, 'unduh'])->name('backup.unduh');
+        Route::delete('/backup/{backup}', [BackupController::class, 'destroy'])->name('backup.destroy');
+    });
 });
