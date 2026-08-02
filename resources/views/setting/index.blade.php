@@ -89,6 +89,7 @@
 
 @push('scripts')
     <script>
+        window.addEventListener('DOMContentLoaded', function () {
         function previewImage(input, target) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -99,5 +100,6 @@
 
         $('#logo').on('change', function () { previewImage(this, '#logoPreview'); });
         $('#favicon').on('change', function () { previewImage(this, '#faviconPreview'); });
-    </script>
+        });
+</script>
 @endpush

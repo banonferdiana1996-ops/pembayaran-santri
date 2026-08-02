@@ -155,11 +155,13 @@
 
 @push('scripts')
     <script>
+        window.addEventListener('DOMContentLoaded', function () {
         $('#datatable').DataTable({
             responsive: true,
             autoWidth: false,
             language: { url: '//cdn.datatables.net/plug-ins/1.13.8/i18n/id.json' },
             pageLength: 25
         });
-    </script>
+        });
+</script>
 @endpush

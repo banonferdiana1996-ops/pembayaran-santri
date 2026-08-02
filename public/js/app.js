@@ -141,6 +141,10 @@ $(function () {
         return 'Rp ' + Number(num || 0).toLocaleString('id-ID');
     };
 
+    // ===== Clock widget + Select2 init =====
+    startClock('.clock-widget');
+    $('select.select2').each(function () { initSelect2(this); });
+
     // ===== PWA Service Worker =====
     if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
         window.addEventListener('load', () => {

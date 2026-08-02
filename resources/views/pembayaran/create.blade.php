@@ -115,6 +115,7 @@
 
 @push('scripts')
     <script>
+        window.addEventListener('DOMContentLoaded', function () {
         const tagihanUrl = '{{ route('pembayaran.tagihan-belum-lunas', ':id') }}';
         const storeUrl = '{{ route('pembayaran.store') }}';
 
@@ -175,5 +176,6 @@
         $('#santri').on('change', function () {
             loadTagihan($(this).val());
         });
-    </script>
+        });
+</script>
 @endpush

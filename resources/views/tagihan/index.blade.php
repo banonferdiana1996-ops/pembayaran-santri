@@ -179,6 +179,7 @@
 
 @push('scripts')
     <script>
+        window.addEventListener('DOMContentLoaded', function () {
         $('#datatable').DataTable({
             responsive: true,
             autoWidth: false,
@@ -197,5 +198,7 @@
             $('#bulanWrap').toggle(!!isBulanan);
             if (!isBulanan) $('#periode_bulan').val('');
         });
-    </script>
+        window.openGenerate = openGenerate;
+        });
+</script>
 @endpush

@@ -68,6 +68,7 @@
 
 @push('scripts')
     <script>
+        window.addEventListener('DOMContentLoaded', function () {
         $('#datatable').DataTable({
             responsive: true,
             autoWidth: false,
@@ -75,5 +76,6 @@
             pageLength: 10,
             order: [[3, 'desc']]
         });
-    </script>
+        });
+</script>
 @endpush

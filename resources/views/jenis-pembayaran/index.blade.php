@@ -135,6 +135,7 @@
 
 @push('scripts')
     <script>
+        window.addEventListener('DOMContentLoaded', function () {
         $('#datatable').DataTable({
             responsive: true,
             autoWidth: false,
@@ -168,5 +169,8 @@
             $('#modalTitle').text('Ubah Jenis Pembayaran');
             $('#modalForm').modal('show');
         }
-    </script>
+        window.openCreate = openCreate;
+        window.openEdit = openEdit;
+        });
+</script>
 @endpush

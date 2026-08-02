@@ -261,7 +261,9 @@
 
 @push('scripts')
     @if ($role === 'keuangan')
+        <script defer src="https://cdn.jsdelivr.net/npm/apexcharts@3.49.1/dist/apexcharts.min.js"></script>
         <script>
+            window.addEventListener('DOMContentLoaded', function () {
             const labels = @json($chartLabels);
             const pemasukan = @json($chartPemasukan);
             const pengeluaran = @json($chartPengeluaran);
@@ -295,6 +297,7 @@
             };
 
             new ApexCharts(document.querySelector('#cashflowChart'), options).render();
+            });
         </script>
     @endif
 @endpush
