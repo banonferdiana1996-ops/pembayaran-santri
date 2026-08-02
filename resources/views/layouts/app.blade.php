@@ -51,8 +51,7 @@
                         <span class="text-capitalize small">{{ auth()->user()->getRoleNames()->first() ?? '-' }}</span>
                     </div>
                     <div class="dropdown-divider"></div>
-                    <a href="{{ route('dashboard') }}" class="dropdown-item"><i class="fas fa-gauge me-2"></i>Dashboard</a>
-                    <a href="{{ route('account.profile') }}" class="dropdown-item"><i class="fas fa-user-gear me-2"></i>Pengaturan User</a>
+                    <a href="{{ route('account.profile') }}" class="dropdown-item"><i class="fas fa-user-gear me-2"></i>Ubah Profil</a>
                     <a href="{{ route('account.password') }}" class="dropdown-item"><i class="fas fa-key me-2"></i>Ubah Password</a>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
