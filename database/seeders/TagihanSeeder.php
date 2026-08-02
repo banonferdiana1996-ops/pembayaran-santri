@@ -32,11 +32,11 @@ class TagihanSeeder extends Seeder
                             'periode_bulan' => $bulan,
                         ],
                         [
-                            'nomor' => 'TGR-' . date('Y') . str_pad((string) $santri->id, 4, '0', STR_PAD_LEFT) . $jenis->kode . $bulan,
+                            'nomor' => 'TGR-'.date('Y').str_pad((string) $santri->id, 4, '0', STR_PAD_LEFT).$jenis->kode.$bulan,
                             'nominal' => $jenis->nominal,
                             'status' => 'belum_lunas',
                             'tanggal_jatuh_tempo' => sprintf('%s-%02d-10', $tahunAjaran->tanggal_mulai->format('Y'), $bulan),
-                            'keterangan' => "{$jenis->nama} bulan " . bulanIndonesia($bulan) . ' ' . $tahunAjaran->nama,
+                            'keterangan' => "{$jenis->nama} bulan ".bulanIndonesia($bulan).' '.$tahunAjaran->nama,
                         ]
                     );
                 }

@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
-use App\Models\JenisPembayaran;
+use App\Models\Pembayaran;
 use App\Models\Santri;
 use App\Models\Tagihan;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pembayaran>
+ * @extends Factory<Pembayaran>
  */
 class PembayaranFactory extends Factory
 {

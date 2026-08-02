@@ -18,7 +18,7 @@ if (! function_exists('bulanIndonesia')) {
 if (! function_exists('formatRupiah')) {
     function formatRupiah(int|float|string|null $angka): string
     {
-        return 'Rp ' . number_format((int) $angka, 0, ',', '.');
+        return 'Rp '.number_format((int) $angka, 0, ',', '.');
     }
 }
 
@@ -29,48 +29,48 @@ if (! function_exists('terbilang')) {
         $huruf = ['', 'satu', 'dua', 'tiga', 'empat', 'lima', 'enam', 'tujuh', 'delapan', 'sembilan', 'sepuluh', 'sebelas'];
 
         if ($angka < 12) {
-            return ' ' . $huruf[$angka];
+            return ' '.$huruf[$angka];
         }
 
         if ($angka < 20) {
-            return terbilang($angka - 10) . ' belas';
+            return terbilang($angka - 10).' belas';
         }
 
         if ($angka < 100) {
-            return terbilang(intdiv($angka, 10)) . ' puluh' . terbilang($angka % 10);
+            return terbilang(intdiv($angka, 10)).' puluh'.terbilang($angka % 10);
         }
 
         if ($angka < 200) {
-            return ' seratus' . terbilang($angka - 100);
+            return ' seratus'.terbilang($angka - 100);
         }
 
         if ($angka < 1000) {
-            return terbilang(intdiv($angka, 100)) . ' ratus' . terbilang($angka % 100);
+            return terbilang(intdiv($angka, 100)).' ratus'.terbilang($angka % 100);
         }
 
         if ($angka < 2000) {
-            return ' seribu' . terbilang($angka - 1000);
+            return ' seribu'.terbilang($angka - 1000);
         }
 
         if ($angka < 1000000) {
-            return terbilang(intdiv($angka, 1000)) . ' ribu' . terbilang($angka % 1000);
+            return terbilang(intdiv($angka, 1000)).' ribu'.terbilang($angka % 1000);
         }
 
         if ($angka < 1000000000) {
-            return terbilang(intdiv($angka, 1000000)) . ' juta' . terbilang($angka % 1000000);
+            return terbilang(intdiv($angka, 1000000)).' juta'.terbilang($angka % 1000000);
         }
 
         if ($angka < 1000000000000) {
-            return terbilang(intdiv($angka, 1000000000)) . ' miliar' . terbilang($angka % 1000000000);
+            return terbilang(intdiv($angka, 1000000000)).' miliar'.terbilang($angka % 1000000000);
         }
 
-        return terbilang(intdiv($angka, 1000000000000)) . ' triliun' . terbilang($angka % 1000000000000);
+        return terbilang(intdiv($angka, 1000000000000)).' triliun'.terbilang($angka % 1000000000000);
     }
 }
 
 if (! function_exists('terbilangRupiah')) {
     function terbilangRupiah(int|float|string|null $angka): string
     {
-        return trim(terbilang((int) $angka)) . ' rupiah';
+        return trim(terbilang((int) $angka)).' rupiah';
     }
 }

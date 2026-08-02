@@ -4,11 +4,12 @@ namespace Database\Factories;
 
 use App\Models\JenisPembayaran;
 use App\Models\Santri;
+use App\Models\Tagihan;
 use App\Models\TahunAjaran;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tagihan>
+ * @extends Factory<Tagihan>
  */
 class TagihanFactory extends Factory
 {

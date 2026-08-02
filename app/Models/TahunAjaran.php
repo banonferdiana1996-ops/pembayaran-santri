@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\TahunAjaranFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TahunAjaran extends Model
 {
-    /** @use HasFactory<\Database\Factories\TahunAjaranFactory> */
+    /** @use HasFactory<TahunAjaranFactory> */
     use HasFactory;
 
     protected $fillable = [

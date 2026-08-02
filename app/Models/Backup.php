@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\BackupFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Backup extends Model
 {
-    /** @use HasFactory<\Database\Factories\BackupFactory> */
+    /** @use HasFactory<BackupFactory> */
     use HasFactory;
 
     protected $fillable = [

@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use App\Models\Kelas;
+use App\Models\Santri;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Santri>
+ * @extends Factory<Santri>
  */
 class SantriFactory extends Factory
 {
@@ -16,7 +17,7 @@ class SantriFactory extends Factory
         $jk = fake()->randomElement(['L', 'P']);
 
         return [
-            'nis' => fake()->unique()->numerify(date('Y') . '###'),
+            'nis' => fake()->unique()->numerify(date('Y').'###'),
             'user_id' => null,
             'kelas_id' => Kelas::factory(),
             'nama_lengkap' => fake()->name($jk === 'L' ? 'male' : 'female'),

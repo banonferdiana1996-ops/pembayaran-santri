@@ -32,7 +32,7 @@ class PembayaranSeeder extends Seeder
     private function bayar(Tagihan $tagihan, int $nominal, User $bendahara, int $no): void
     {
         $pembayaran = Pembayaran::create([
-            'nomor' => 'PMB-' . date('Y') . str_pad((string) $no, 6, '0', STR_PAD_LEFT),
+            'nomor' => 'PMB-'.date('Y').str_pad((string) $no, 6, '0', STR_PAD_LEFT),
             'tagihan_id' => $tagihan->id,
             'santri_id' => $tagihan->santri_id,
             'jenis_pembayaran_id' => $tagihan->jenis_pembayaran_id,
@@ -40,7 +40,7 @@ class PembayaranSeeder extends Seeder
             'nominal' => $nominal,
             'metode' => ['tunai', 'transfer'][$no % 2],
             'tanggal_bayar' => now()->subDays($no % 10)->format('Y-m-d'),
-            'keterangan' => 'Pembayaran ' . ($tagihan->jenisPembayaran?->nama ?? 'tagihan'),
+            'keterangan' => 'Pembayaran '.($tagihan->jenisPembayaran?->nama ?? 'tagihan'),
         ]);
 
         $totalDibayar = $tagihan->pembayarans()->sum('nominal');

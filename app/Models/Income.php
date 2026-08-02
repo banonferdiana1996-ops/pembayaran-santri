@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\IncomeFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Income extends Model
 {
-    /** @use HasFactory<\Database\Factories\IncomeFactory> */
+    /** @use HasFactory<IncomeFactory> */
     use HasFactory;
 
     protected $fillable = [

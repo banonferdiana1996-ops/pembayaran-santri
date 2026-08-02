@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Database\Factories\TagihanFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tagihan extends Model
 {
-    /** @use HasFactory<\Database\Factories\TagihanFactory> */
+    /** @use HasFactory<TagihanFactory> */
     use HasFactory;
 
     public const STATUS_BELUM_LUNAS = 'belum_lunas';

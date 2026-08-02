@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
+use Database\Factories\JenisPembayaranFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JenisPembayaran extends Model
 {
-    /** @use HasFactory<\Database\Factories\JenisPembayaranFactory> */
+    /** @use HasFactory<JenisPembayaranFactory> */
     use HasFactory;
 
     protected $fillable = [
