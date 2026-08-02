@@ -30,7 +30,7 @@ class WhatsappService
         $token = (string) Setting::get('wa_api_token', '');
 
         try {
-            $response = Http::timeout(15)
+            $response = Http::timeout(8)
                 ->withHeaders(['Authorization' => $token])
                 ->post($url, [
                     'target' => $target,
