@@ -80,6 +80,38 @@
             </div>
         </div>
 
+        <div class="row g-3 mt-0">
+            <div class="col-lg-8">
+                <div class="card card-soft border-0">
+                    <div class="card-header bg-white border-0">
+                        <h5 class="mb-0 fw-semibold"><i class="fab fa-whatsapp text-primary me-2"></i>Notifikasi WhatsApp</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-check form-switch mb-3">
+                            <input class="form-check-input" type="checkbox" role="switch" id="wa_enabled" name="wa_enabled" value="1"
+                                   {{ \App\Support\Setting::get('wa_enabled', false) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="wa_enabled">Aktifkan notifikasi otomatis</label>
+                            <div class="form-text">Kirim notifikasi WhatsApp ke No. HP wali saat pembayaran selesai dicatat.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="wa_api_url" class="form-label">URL Gateway</label>
+                            <input type="url" class="form-control" id="wa_api_url" name="wa_api_url"
+                                   placeholder="https://api.fonnte.com/send"
+                                   value="{{ old('wa_api_url', \App\Support\Setting::get('wa_api_url', 'https://api.fonnte.com/send')) }}">
+                            <div class="form-text">Gunakan endpoint API yang kompatibel dengan Fonnte (POST + header Authorization).</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="wa_api_token" class="form-label">Token API</label>
+                            <input type="password" class="form-control" id="wa_api_token" name="wa_api_token"
+                                   placeholder="Token API gateway WhatsApp"
+                                   value="{{ old('wa_api_token', \App\Support\Setting::get('wa_api_token', '')) }}">
+                            <div class="form-text">Token yang diterima dari penyedia layanan gateway WhatsApp Anda.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex gap-2 justify-content-end mt-3">
             <a href="{{ route('dashboard') }}" class="btn btn-light">Batal</a>
             <button type="submit" class="btn btn-primary-grad"><i class="fas fa-save me-1"></i>Simpan Pengaturan</button>

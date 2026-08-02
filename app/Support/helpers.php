@@ -1,6 +1,8 @@
 <?php
 
 declare(strict_types=1);
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
 
 if (! function_exists('bulanIndonesia')) {
     function bulanIndonesia(int $bulan): string
@@ -72,5 +74,29 @@ if (! function_exists('terbilangRupiah')) {
     function terbilangRupiah(int|float|string|null $angka): string
     {
         return trim(terbilang((int) $angka)).' rupiah';
+    }
+}
+
+if (! function_exists('qrcodeDataUri')) {
+    function qrcodeDataUri(string $content, int $size = 220): string
+    {
+        $qrCode = new QrCode(data: $content, size: $size);
+
+        return (new PngWriter)->write($qrCode)->getDataUri();
+    }
+}
+
+if (! function_exists('normalisasiNomorHp')) {
+    function normalisasiNomorHp(?string $nomor): ?string
+    {
+        $nomor = preg_replace('/[^0-9]/', '', (string) $nomor);
+
+        if (str_starts_with($nomor, '0')) {
+            $nomor = '62'.substr($nomor, 1);
+        } elseif (! str_starts_with($nomor, '62')) {
+            $nomor = '62'.$nomor;
+        }
+
+        return $nomor ?: null;
     }
 }

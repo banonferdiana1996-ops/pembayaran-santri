@@ -13,15 +13,29 @@
     <div class="card card-soft border-0">
         <div class="card-header bg-white border-0 d-flex justify-content-between align-items-center flex-wrap gap-2">
             <h5 class="mb-0 fw-semibold"><i class="fas fa-user-graduate text-primary me-2"></i>Data Santri</h5>
-            <button class="btn btn-primary-grad" onclick="openCreate()">
-                <i class="fas fa-plus me-1"></i>Tambah Santri
-            </button>
+            <div class="d-flex flex-wrap gap-2">
+                <button class="btn btn-outline-primary" id="btnCetakKartu" onclick="cetakKartuTerpilih()" disabled>
+                    <i class="fas fa-id-card me-1"></i>Cetak Kartu
+                </button>
+                <button class="btn btn-outline-danger" id="btnHapusMasal" onclick="hapusTerpilih()" disabled>
+                    <i class="fas fa-trash me-1"></i>Hapus Terpilih
+                </button>
+                <button class="btn btn-outline-secondary" onclick="openImport()">
+                    <i class="fas fa-file-import me-1"></i>Upload Data
+                </button>
+                <button class="btn btn-primary-grad" onclick="openCreate()">
+                    <i class="fas fa-plus me-1"></i>Tambah Santri
+                </button>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table id="datatable" class="table table-hover align-middle">
                     <thead>
                         <tr>
+                            <th class="ps-4" style="width: 36px;">
+                                <input type="checkbox" class="form-check-input" id="pilihSemua" title="Pilih semua">
+                            </th>
                             <th>NIS</th>
                             <th>Nama</th>
                             <th>JK</th>
@@ -54,6 +68,9 @@
                                 ];
                             @endphp
                             <tr>
+                                <td class="ps-4">
+                                    <input type="checkbox" class="form-check-input pilih-santri" value="{{ $santri->id }}" data-nis="{{ $santri->nis }}">
+                                </td>
                                 <td class="text-muted">{{ $santri->nis }}</td>
                                 <td class="fw-semibold">{{ $santri->nama_lengkap }}</td>
                                 <td>{{ $santri->jenis_kelamin }}</td>
@@ -69,6 +86,9 @@
                                     @endif
                                 </td>
                                 <td class="text-end">
+                                    <a href="{{ route('santri.kartu', $santri) }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-3" title="Cetak Kartu">
+                                        <i class="fas fa-id-card"></i>
+                                    </a>
                                     <button class="btn btn-sm btn-info rounded-3" data-edit='@json($edit)' onclick="openEdit(this)">
                                         <i class="fas fa-pen"></i>
                                     </button>
@@ -195,19 +215,131 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalImport" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="formImport" data-ajax enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-header">
+                        <h5 class="modal-title">Upload Data Santri</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-info small">
+                            <i class="fas fa-circle-info me-1"></i>
+                            Gunakan format Excel (.xlsx/.xls/.csv). Kolom yang diperlukan: NIS, Nama Lengkap, Jenis Kelamin (L/P). Kolom lain opsional.
+                            <a href="{{ route('santri.import.template') }}" class="fw-semibold d-inline-block mt-1">
+                                <i class="fas fa-download me-1"></i>Unduh Template
+                            </a>
+                        </div>
+                        <div class="mb-3">
+                            <label for="file_import" class="form-label">File Data Santri</label>
+                            <input type="file" class="form-control" id="file_import" name="file" accept=".xlsx,.xls,.csv" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary-grad"><i class="fas fa-file-import me-1"></i>Upload & Import</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
     <script>
         window.addEventListener('DOMContentLoaded', function () {
-        $('#datatable').DataTable({
+        // ===== Pilihan massal =====
+        const selected = new Set();
+        const $btnCetak = $('#btnCetakKartu');
+        const $btnHapus = $('#btnHapusMasal');
+
+        function syncBulk() {
+            const count = selected.size;
+            $btnCetak.prop('disabled', count === 0);
+            $btnHapus.prop('disabled', count === 0);
+            $btnCetak.text('Cetak Kartu' + (count ? ' (' + count + ')' : ''));
+            $btnHapus.text('Hapus Terpilih' + (count ? ' (' + count + ')' : ''));
+        }
+
+        const dt = $('#datatable').DataTable({
             responsive: true,
             autoWidth: false,
             language: { url: '//cdn.datatables.net/plug-ins/1.13.8/i18n/id.json' },
             pageLength: 10
         });
 
+        dt.on('draw', function () {
+            $('.pilih-santri:visible').each(function () {
+                this.checked = selected.has($(this).val());
+            });
+            syncBulk();
+        });
+
         const storeUrl = '{{ route('santri.store') }}';
+
+        $(document).on('change', '.pilih-santri', function () {
+            const id = $(this).val();
+            this.checked ? selected.add(id) : selected.delete(id);
+            syncBulk();
+        });
+
+        $('#pilihSemua').on('change', function () {
+            const checked = this.checked;
+            $('.pilih-santri:visible').each(function () {
+                this.checked = checked;
+                checked ? selected.add($(this).val()) : selected.delete($(this).val());
+            });
+            syncBulk();
+        });
+
+        window.cetakKartuTerpilih = function () {
+            if (!selected.size) return;
+            window.open('{{ route('santri.cetak-kartu') }}?ids=' + Array.from(selected).join(','), '_blank');
+        };
+
+        window.hapusTerpilih = async function () {
+            if (!selected.size) return;
+            const confirm = await Swal.fire({
+                title: 'Hapus data terpilih?',
+                text: selected.size + ' data santri akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            });
+            if (!confirm.isConfirmed) return;
+
+            const formData = new FormData();
+            Array.from(selected).forEach(id => formData.append('ids[]', id));
+
+            try {
+                const res = await fetch('{{ route('santri.hapus-masal') }}', {
+                    method: 'POST',
+                    headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                    body: formData
+                });
+                const json = await res.json();
+                if (json.success) {
+                    showToast('success', json.message);
+                    setTimeout(() => window.location.reload(), 800);
+                } else {
+                    showToast('error', json.message || 'Terjadi kesalahan!');
+                }
+            } catch (e) {
+                showToast('error', 'Terjadi kesalahan server!');
+            }
+        };
+
+        // ===== Modal import =====
+        window.openImport = function () {
+            $('#formImport')[0].reset();
+            $('#modalImport').modal('show');
+        };
 
         $('#foto').on('change', function () {
             const [file] = this.files;

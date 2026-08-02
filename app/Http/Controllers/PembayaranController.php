@@ -6,6 +6,7 @@ use App\Models\JenisPembayaran;
 use App\Models\Pembayaran;
 use App\Models\Santri;
 use App\Models\Tagihan;
+use App\Services\WhatsappService;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -124,6 +125,8 @@ class PembayaranController extends Controller
 
             return $pembayaran;
         });
+
+        app(WhatsappService::class)->sendPembayaranNotification($pembayaran);
 
         return response()->json([
             'success' => true,

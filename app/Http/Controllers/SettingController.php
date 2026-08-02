@@ -23,6 +23,9 @@ class SettingController extends Controller
             'email' => ['nullable', 'email'],
             'logo' => ['nullable', 'image', 'max:2048'],
             'favicon' => ['nullable', 'image', 'max:2048'],
+            'wa_enabled' => ['sometimes', 'boolean'],
+            'wa_api_url' => ['nullable', 'url'],
+            'wa_api_token' => ['nullable', 'string'],
         ]);
 
         foreach ($data as $key => $value) {
@@ -39,6 +42,10 @@ class SettingController extends Controller
                 Setting::set($field, '/uploads/settings/'.$name);
             }
         }
+
+        Setting::set('wa_enabled', $request->boolean('wa_enabled') ? '1' : '0');
+        Setting::set('wa_api_url', $request->input('wa_api_url') ?: 'https://api.fonnte.com/send');
+        Setting::set('wa_api_token', $request->input('wa_api_token', ''));
 
         Setting::flush();
 

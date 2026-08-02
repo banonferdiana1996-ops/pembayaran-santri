@@ -51,6 +51,11 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/santri', [SantriController::class, 'index'])->name('santri.index');
         Route::post('/santri', [SantriController::class, 'store'])->name('santri.store');
+        Route::post('/santri/import', [SantriController::class, 'import'])->name('santri.import');
+        Route::get('/santri/import/template', [SantriController::class, 'unduhTemplate'])->name('santri.import.template');
+        Route::post('/santri/hapus-masal', [SantriController::class, 'hapusMasal'])->name('santri.hapus-masal');
+        Route::get('/santri/cetak-kartu', [SantriController::class, 'cetakKartuMasal'])->name('santri.cetak-kartu');
+        Route::get('/santri/{santri}/kartu', [SantriController::class, 'kartu'])->name('santri.kartu');
         Route::put('/santri/{santri}', [SantriController::class, 'update'])->name('santri.update');
         Route::delete('/santri/{santri}', [SantriController::class, 'destroy'])->name('santri.destroy');
 
